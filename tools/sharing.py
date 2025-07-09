@@ -6,7 +6,7 @@ from .base import get_onedrive_client
 # Configure logging
 logger = logging.getLogger(__name__)
 
-def onedrive_list_shared_items() -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
+async def onedrive_list_shared_items() -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
     """
     List all items shared with the current user in OneDrive.
 
@@ -42,7 +42,7 @@ def onedrive_list_shared_items() -> Union[Tuple[str, Dict[str, Any]], Tuple[str,
         logger.error(f"Exception while fetching shared items: {str(e)}")
         return ("Error:", str(e))
 
-def onedrive_create_share_link(
+async def onedrive_create_share_link(
     item_id: str,
     link_type: Literal["view", "edit", "embed"] = "view",
     scope: Literal["anonymous", "organization"] = "anonymous"

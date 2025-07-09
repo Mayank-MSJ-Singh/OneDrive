@@ -6,7 +6,7 @@ from .base import get_onedrive_client
 # Configure logging
 logger = logging.getLogger(__name__)
 
-def onedrive_list_root_files_folders() -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
+async def onedrive_list_root_files_folders() -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
     """
     List all files and folders in the root of OneDrive.
 
@@ -36,7 +36,7 @@ def onedrive_list_root_files_folders() -> Union[Tuple[str, Dict[str, Any]], Tupl
         logger.error(f"Exception while listing root items: {e}")
         return ("Error:", str(e))
 
-def onedrive_list_inside_folder(folder_id: str) -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
+async def onedrive_list_inside_folder(folder_id: str) -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
     """
     List all items inside a specific folder.
 
@@ -69,7 +69,7 @@ def onedrive_list_inside_folder(folder_id: str) -> Union[Tuple[str, Dict[str, An
         logger.error(f"Exception while listing folder items: {e}")
         return ("Error:", str(e))
 
-def onedrive_search_item_by_name(itemname: str) -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
+async def onedrive_search_item_by_name(itemname: str) -> Union[Tuple[str, Dict[str, Any]], Tuple[str, int, str]]:
     """
     Search for items by name in OneDrive.
 
@@ -102,7 +102,7 @@ def onedrive_search_item_by_name(itemname: str) -> Union[Tuple[str, Dict[str, An
         logger.error(f"Exception while searching items: {e}")
         return ("Error:", str(e))
 
-def onedrive_search_folder_by_name(folder_name: str) -> Union[Tuple[str, List[Dict[str, Any]]], Tuple[str, int, str]]:
+async def onedrive_search_folder_by_name(folder_name: str) -> Union[Tuple[str, List[Dict[str, Any]]], Tuple[str, int, str]]:
     """
     Search for folders by name in OneDrive.
 
@@ -136,7 +136,7 @@ def onedrive_search_folder_by_name(folder_name: str) -> Union[Tuple[str, List[Di
         logger.error(f"Exception while searching folders: {e}")
         return ("Error:", str(e))
 
-def onedrive_get_item_by_id(item_id: str) -> Union[Dict[str, Any], Tuple[str, int, str]]:
+async def onedrive_get_item_by_id(item_id: str) -> Union[Dict[str, Any], Tuple[str, int, str]]:
     """
     Get item details by its ID.
 

@@ -9,7 +9,7 @@ from .search_n_list import onedrive_list_inside_folder
 logger = logging.getLogger(__name__)
 
 
-def onedrive_read_file_content(file_id: str) -> Union[str, Tuple[str, int, str]]:
+async def onedrive_read_file_content(file_id: str) -> Union[str, Tuple[str, int, str]]:
     """
     Read the content of a file from OneDrive.
 
@@ -42,7 +42,7 @@ def onedrive_read_file_content(file_id: str) -> Union[str, Tuple[str, int, str]]
         return ("Error:", str(e))
 
 
-def onedrive_overwrite_file_by_id(file_id: str, new_content: str) -> Union[Tuple[str, Dict], Tuple[str, int, str]]:
+async def onedrive_overwrite_file_by_id(file_id: str, new_content: str) -> Union[Tuple[str, Dict], Tuple[str, int, str]]:
     """
     Overwrite the content of an existing file in OneDrive.
 
@@ -76,7 +76,7 @@ def onedrive_overwrite_file_by_id(file_id: str, new_content: str) -> Union[Tuple
         return ("Error:", str(e))
 
 
-def onedrive_create_file(
+async def onedrive_create_file(
         parent_folder_id: str,
         new_file_name: str,
         data: str = None,
@@ -142,7 +142,7 @@ def onedrive_create_file(
         return ("Error:", str(e))
 
 
-def onedrive_create_file_in_root(
+async def onedrive_create_file_in_root(
         new_file_name: str,
         data: str = None,
         if_exists: str = 'error'

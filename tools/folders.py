@@ -6,7 +6,7 @@ from .base import get_onedrive_client
 # Configure logging
 logger = logging.getLogger(__name__)
 
-def onedrive_create_folder(
+async def onedrive_create_folder(
     parent_folder_id: str,
     new_folder_name: str,
     behavior: str = "fail"
@@ -54,7 +54,7 @@ def onedrive_create_folder(
         logger.error(f"Exception occurred while creating folder: {e}")
         return ("Error:", str(e))
 
-def onedrive_create_folder_in_root(
+async def onedrive_create_folder_in_root(
     folder_name: str
 ) -> Union[Dict[str, Any], Tuple[str, int, str]]:
     """

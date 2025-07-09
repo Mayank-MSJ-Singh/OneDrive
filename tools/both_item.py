@@ -7,7 +7,7 @@ from .base import get_onedrive_client
 logger = logging.getLogger(__name__)
 
 
-def onedrive_rename_item(file_id: str, new_name: str) -> Union[Tuple[str, dict], Tuple[str, int, str]]:
+async def onedrive_rename_item(file_id: str, new_name: str) -> Union[Tuple[str, dict], Tuple[str, int, str]]:
     """
     Rename an item in OneDrive.
 
@@ -45,7 +45,7 @@ def onedrive_rename_item(file_id: str, new_name: str) -> Union[Tuple[str, dict],
         return ("Error:", str(e))
 
 
-def onedrive_move_item(item_id: str, new_parent_id: str) -> Union[Tuple[str, dict], Tuple[str, int, str]]:
+async def onedrive_move_item(item_id: str, new_parent_id: str) -> Union[Tuple[str, dict], Tuple[str, int, str]]:
     """
     Move an item to a different folder in OneDrive.
 
@@ -81,7 +81,7 @@ def onedrive_move_item(item_id: str, new_parent_id: str) -> Union[Tuple[str, dic
         return ("Error:", str(e))
 
 
-def onedrive_delete_item(item_id: str) -> Union[Tuple[str], Tuple[str, int, str]]:
+async def onedrive_delete_item(item_id: str) -> Union[Tuple[str], Tuple[str, int, str]]:
     """
     Delete an item from OneDrive.
 
