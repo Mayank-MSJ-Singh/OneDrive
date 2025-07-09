@@ -16,7 +16,6 @@ def get_auth_token() -> str:
         token = auth_token_context.get()
         if not token:
             token = os.getenv("ONEDRIVE_ACCESS_TOKEN")
-            print(f"---Token: {token}")
             if not token:
                 raise RuntimeError("No authentication token available")
         return token

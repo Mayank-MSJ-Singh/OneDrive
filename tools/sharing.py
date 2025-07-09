@@ -4,17 +4,16 @@ from base import get_onedrive_client
 def list_shared_items():
     client = get_onedrive_client()
     if not client:
-        print("Could not get OneDrive client")
-        return
+        return ("Could not get OneDrive client")
 
     url = f"{client['base_url']}/me/drive/sharedWithMe"
     response = requests.get(url, headers=client['headers'])
 
     if response.ok:
         items = response.json()
-        print("Items shared with me:", items)
+        return ("Items shared with me:", items)
     else:
-        print("Error:", response.status_code, response.text)
+        return ("Error:", response.status_code, response.text)
 
 def onedrive_create_share_link(item_id, link_type="view"):
     """
@@ -25,8 +24,7 @@ def onedrive_create_share_link(item_id, link_type="view"):
     """
     client = get_onedrive_client()
     if not client:
-        print("Could not get OneDrive client")
-        return
+        return ("Could not get OneDrive client")
 
     url = f"{client['base_url']}/me/drive/items/{item_id}/createLink"
     data = {
@@ -42,10 +40,9 @@ def onedrive_create_share_link(item_id, link_type="view"):
 
     if response.ok:
         result = response.json()
-        print("Share link created:", result['link']['webUrl'])
-        return result['link']['webUrl']
+        return result
     else:
-        print("Error:", response.status_code, response.text)
+        return ("Error:", response.status_code, response.text)
 
 if __name__ == "__main__":
     pass

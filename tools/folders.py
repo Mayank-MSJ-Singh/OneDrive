@@ -4,8 +4,7 @@ from base import get_onedrive_client
 def onedrive_create_folder(parent_folder_id, new_folder_name, behavior = "fail"):
     client = get_onedrive_client()
     if not client:
-        print("Could not get OneDrive client")
-        return
+        return ("Could not get OneDrive client")
 
     url = f"{client['base_url']}/me/drive/items/{parent_folder_id}/children"
     data = {
@@ -17,9 +16,9 @@ def onedrive_create_folder(parent_folder_id, new_folder_name, behavior = "fail")
     response = requests.post(url, headers={**client['headers'], "Content-Type": "application/json"}, json=data)
 
     if response.ok:
-        print("Folder created successfully:", response.json())
+        return ("Folder created successfully:", response.json())
     else:
-        print("Error:", response.status_code, response.text)
+        return ("Error:", response.status_code, response.text)
 
 if __name__ == "__main__":
     pass
