@@ -1,5 +1,5 @@
 import requests
-from base import get_onedrive_client
+from .base import get_onedrive_client
 
 def onedrive_rename_item(file_id, new_name):
     client = get_onedrive_client()
@@ -45,6 +45,3 @@ def onedrive_delete_item(item_id):
         return (f"Item {item_id} deleted.")
     else:
         return ("Error:", response.status_code, response.text)
-
-if __name__ == "__main__":
-    pass

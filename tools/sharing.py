@@ -1,5 +1,5 @@
 import requests
-from base import get_onedrive_client
+from .base import get_onedrive_client
 
 def onedrive_list_shared_items():
     client = get_onedrive_client()
@@ -43,6 +43,3 @@ def onedrive_create_share_link(item_id, link_type="view"):
         return result
     else:
         return ("Error:", response.status_code, response.text)
-
-if __name__ == "__main__":
-    pass

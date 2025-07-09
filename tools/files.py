@@ -1,6 +1,6 @@
 import requests
-from base import get_onedrive_client
-from search_n_list import onedrive_list_inside_folder
+from .base import get_onedrive_client
+from .search_n_list import onedrive_list_inside_folder
 import os
 
 
@@ -64,24 +64,54 @@ def onedrive_create_file(parent_folder_id, new_file_name, data=None, if_exists='
         else:
             return ("Invalid if_exists option.")
 
-    # Step 3: upload (this will overwrite if file exists, but we controlled name above)
-    upload_url = f"{client['base_url']}/me/drive/items/{parent_folder_id}:/{final_name}:/content"
-    put_response = requests.put(upload_url, headers=client['headers'], data=data or '')
+    url = f"{client['base_url']}/me/drive/items/{parent_folder_id}:/{final_name}:/content"
+    put_response = requests.put(url, headers=client['headers'], data=data or '')
 
     if put_response.ok:
         return ("File created:", put_response.json())
     else:
         return ("Error creating file:", put_response.status_code, put_response.text)
 
-if __name__ == '__main__':
-    '''
-    return ("   ")
-    onedrive_read_file_content('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22')
-    return ("   ")
-    onedrive_overwrite_file_by_id('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22', 'Hello From OneDrive')
-    return ("   ")
-    onedrive_read_file_content('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22')
-    '''
-    #onedrive_create_empty_file_in_folder('9070248CB48F76D1!sc69751d3820a41ddac373e7b209be2f0', 'new_file.txt')
+def onedrive_create_file_in_root(new_file_name, data=None, if_exists='error'):
+    """
+    if_exists: 'error' → abort if exists
+               'rename' → create with unique name
+               'replace' → overwrite
+    """
+    client = get_onedrive_client()
+    if not client:
+        return ("Could not get OneDrive client")
 
-    pass
+    # Step 1: list files/folders in root
+    existing_items_resp = requests.get(
+        f"{client['base_url']}/me/drive/root/children",
+        headers=client['headers']
+    )
+    if not existing_items_resp.ok:
+        return ("Could not list root contents:", existing_items_resp.status_code, existing_items_resp.text)
+
+    existing_items = existing_items_resp.json().get('value', [])
+    existing_names = [item['name'] for item in existing_items]
+
+    # Step 2: decide
+    final_name = new_file_name
+    if new_file_name in existing_names:
+        if if_exists == 'error':
+            return (f"File '{new_file_name}' already exists. Aborting.")
+        elif if_exists == 'rename':
+            import uuid
+            name, ext = os.path.splitext(new_file_name)
+            final_name = f"{name}_{uuid.uuid4().hex}{ext}"
+        elif if_exists == 'replace':
+            pass  # same name, will overwrite
+        else:
+            return ("Invalid if_exists option.")
+
+    # Step 3: create (upload) the file
+    url = f"{client['base_url']}/me/drive/root:/{final_name}:/content"
+    put_response = requests.put(url, headers=client['headers'], data=data or '')
+
+    if put_response.ok:
+        return ("File created:", put_response.json())
+    else:
+        return ("Error creating file:", put_response.status_code, put_response.text)

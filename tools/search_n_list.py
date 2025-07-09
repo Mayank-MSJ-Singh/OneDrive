@@ -1,7 +1,7 @@
 import requests
-from base import get_onedrive_client
+from .base import get_onedrive_client
 
-def one_drive_list_root_files_folders():
+def onedrive_list_root_files_folders():
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
@@ -31,12 +31,12 @@ def onedrive_list_inside_folder(folder_id):
     else:
         return ("Error:", response.status_code, response.text)
 
-def onedrive_search_file(filename):
+def onedrive_search_item_by_name(itemname):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
 
-    url = f"{client['base_url']}/me/drive/root/search(q='{filename}')"
+    url = f"{client['base_url']}/me/drive/root/search(q='{itemname}')"
     response = requests.get(url, headers=client['headers'])
 
     if response.ok:
@@ -45,7 +45,7 @@ def onedrive_search_file(filename):
     else:
         return ("Error:", response.status_code, response.text)
 
-def onedrive_search_folder(folder_name):
+def onedrive_search_folder_by_name(folder_name):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
@@ -61,12 +61,12 @@ def onedrive_search_folder(folder_name):
     else:
         return ("Error:", response.status_code, response.text)
 
-def onedrive_get_file_by_id(file_id):
+def onedrive_get_item_by_id(item_id):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
 
-    url = f"{client['base_url']}/me/drive/items/{file_id}"
+    url = f"{client['base_url']}/me/drive/items/{item_id}"
 
     response = requests.get(url, headers=client['headers'])
 
@@ -75,28 +75,3 @@ def onedrive_get_file_by_id(file_id):
         return data
     else:
         return ("Error:", response.status_code, response.text)
-
-
-def onedrive_get_file_content(file_id):
-    client = get_onedrive_client()
-    if not client:
-        return ("Could not get OneDrive client")
-
-    url = f"{client['base_url']}/me/drive/items/{file_id}/content"
-    response = requests.get(url, headers=client['headers'])
-
-    if response.ok:
-        return (response.text)  # or response.content for binary
-    else:
-        return ("Error:", response.status_code, response.text)
-
-
-
-if __name__ == "__main__":
-    #list_root_files_folders()
-    #list_inside_folder('9070248CB48F76D1!sc69751d3820a41ddac373e7b209be2f0')
-    #search_file('newtestfile')
-    #search_folder('new')
-    #return (get_file_by_id('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22'))
-    #list_shared_files()
-    pass
