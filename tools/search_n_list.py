@@ -17,7 +17,7 @@ def list_root_files_folders():
     else:
         print("Error:", response.status_code, response.text)
 
-def list_inside_folder(folder_id):
+def onedrive_list_inside_folder(folder_id):
     client = get_onedrive_client()
     if not client:
         print("Could not get OneDrive client")
@@ -100,7 +100,7 @@ def list_recent_files(since_datetime):
 #----------------------------------------------------------------------
 
 
-def get_file_content(file_id):
+def onedrive_get_file_content(file_id):
     client = get_onedrive_client()
     if not client:
         print("Could not get OneDrive client")
