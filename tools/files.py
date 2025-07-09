@@ -4,6 +4,7 @@ import os
 from typing import Tuple, Union, Dict, Any
 from .base import get_onedrive_client
 from .search_n_list import onedrive_list_inside_folder
+import uuid
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -104,10 +105,13 @@ async def onedrive_create_file(
         logger.info(f"Creating file '{new_file_name}' in folder {parent_folder_id} with if_exists={if_exists}")
 
         # Step 1: list files/folders inside parent folder
-        existing_items = onedrive_list_inside_folder(parent_folder_id)
-        if existing_items is None:
+        result = await onedrive_list_inside_folder(parent_folder_id)
+
+        if not result or len(result) < 2:
             logger.error(f"Could not list contents of folder {parent_folder_id}")
             return ("Could not list folder contents",)
+
+        _, existing_items = result
 
         existing_names = [item['name'] for item in existing_items.get('value', [])]
 
@@ -209,3 +213,4 @@ async def onedrive_create_file_in_root(
     except Exception as e:
         logger.error(f"Exception occurred while creating file in root: {e}")
         return ("Error:", str(e))
+
