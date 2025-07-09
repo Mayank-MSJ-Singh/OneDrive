@@ -1,7 +1,7 @@
 import requests
 from base import get_onedrive_client
 
-def list_root_files_folders():
+def one_drive_list_root_files_folders():
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
@@ -31,7 +31,7 @@ def onedrive_list_inside_folder(folder_id):
     else:
         return ("Error:", response.status_code, response.text)
 
-def search_file(filename):
+def onedrive_search_file(filename):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
@@ -45,7 +45,7 @@ def search_file(filename):
     else:
         return ("Error:", response.status_code, response.text)
 
-def search_folder(folder_name):
+def onedrive_search_folder(folder_name):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
@@ -61,7 +61,7 @@ def search_folder(folder_name):
     else:
         return ("Error:", response.status_code, response.text)
 
-def get_file_by_id(file_id):
+def onedrive_get_file_by_id(file_id):
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")

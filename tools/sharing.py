@@ -1,7 +1,7 @@
 import requests
 from base import get_onedrive_client
 
-def list_shared_items():
+def onedrive_list_shared_items():
     client = get_onedrive_client()
     if not client:
         return ("Could not get OneDrive client")
