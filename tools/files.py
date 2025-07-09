@@ -32,12 +32,31 @@ def onedrive_overwrite_file_by_id(file_id, new_content):
     else:
         print("Error:", response.status_code, response.text)
 
+def onedrive_create_empty_file_in_folder(parent_folder_id, new_file_name):
+    client = get_onedrive_client()
+    if not client:
+        print("Could not get OneDrive client")
+        return
+
+    url = f"{client['base_url']}/me/drive/items/{parent_folder_id}:/{new_file_name}:/content"
+
+    # Empty content for an empty file
+    response = requests.put(url, headers=client['headers'], data='')
+
+    if response.ok:
+        print("File created:", response.json())
+    else:
+        print("Error:", response.status_code, response.text)
+
 if __name__ == '__main__':
+    '''
     print("   ")
     onedrive_read_file_content('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22')
     print("   ")
     onedrive_overwrite_file_by_id('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22', 'Hello From OneDrive')
     print("   ")
     onedrive_read_file_content('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22')
+    '''
+    #onedrive_create_empty_file_in_folder('9070248CB48F76D1!sc69751d3820a41ddac373e7b209be2f0', 'new_file.txt')
 
     pass
