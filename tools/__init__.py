@@ -25,7 +25,12 @@ from .search_n_list import (
     onedrive_list_inside_folder,
     onedrive_search_item_by_name,
     onedrive_search_folder_by_name,
-    onedrive_get_item_by_id,
+    onedrive_get_item_by_id
+)
+
+from .sharing import (
+    onedrive_list_shared_items,
+    onedrive_create_share_link
 )
 
 __all__ = [
@@ -52,5 +57,9 @@ __all__ = [
     "onedrive_list_inside_folder",
     "onedrive_search_item_by_name",
     "onedrive_search_folder_by_name",
-    "onedrive_get_item_by_id"
+    "onedrive_get_item_by_id",
+
+    # Sharing
+    "onedrive_list_shared_items",
+    "onedrive_create_share_link"
 ]
