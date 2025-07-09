@@ -134,6 +134,5 @@ if __name__ == "__main__":
     #search_file('newtestfile')
     #search_folder('new')
     #print(get_file_by_id('9070248CB48F76D1!s789c335b3a4c492ca35fc7f1f962aa22'))
-    #get_file_content('9070248CB48F76D1!s6aa0a1237a3b41c2b0a49813afd9cc30')
     #list_shared_files()
     pass
